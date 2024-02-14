@@ -1,0 +1,39 @@
+import discord
+from discord.ext import commands
+import asyncio
+import ai_model
+import requests
+
+
+intents = discord.Intents.all()
+
+bot = commands.Bot(intents = intents, command_prefix = "!")
+
+@bot.event
+async def on_ready():
+    print(f"{bot.user.name}'ya giriş yaptık.")
+    print("Botunuz Online")
+
+
+@bot.command()
+async def merhaba(ctx):
+    await ctx.send(f"Merhaba {to.mention}!")
+
+
+@bot.command()
+async def ayirt(ctx, link):
+    response = requests.get(link)
+    file = open("output.png", 'wb')
+    file.write(response.content)
+    file.close()
+    await ctx.send("Resim indirildi")
+
+    class_name, confidence_score = ai_model.predict()
+
+    await ctx.send(f"Bu %{confidence_score} oranında {class_name}.")
+
+    
+
+
+
+bot.run("Token")
